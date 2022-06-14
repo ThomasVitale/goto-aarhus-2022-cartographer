@@ -4,7 +4,7 @@ kind: Workload
 metadata:
   name: book-service
   labels:
-    app.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/workload-type: web
     app.kubernetes.io/part-of: book-service
 spec:
   source:
@@ -12,11 +12,15 @@ spec:
       url: https://github.com/ThomasVitale/goto-aarhus-2022-cartographer
       ref:
         branch: main
-      subPath: applications/book-service
+    subPath: applications/book-service
+  build:
+    env: 
+      - name: BP_JVM_VERSION 
+        value: "17.*"
   resources:
     limits:
-      cpu: 0.1
+      cpu: "2"
       memory: 756Mi
     requests:
-      cpu: 2
+      cpu: "0.1"
       memory: 756Mi

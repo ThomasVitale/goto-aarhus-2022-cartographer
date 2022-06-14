@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: java-test
+  labels:
+    apps.tanzu.vmware.com/task: test
+spec:
+  params:
+    - name: blob-url
+    - name: blob-revision
+  steps:
+    - name: test
+      image: ghcr.io/thomasvitale/gradle:7.4.2-jdk17-jammy
+      command:
+        - bash
+        - -cxe
+        - |-
+          set -o pipefail
+          echo $(params.blob-revision)
+          cd `mktemp -d`
+          wget -qO- $(params.blob-url) | tar xvz
+          cd applications/music-service
+          chmod +x ./gradlew
+          ./gradlew test

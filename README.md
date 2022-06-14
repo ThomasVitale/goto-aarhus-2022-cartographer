@@ -71,6 +71,80 @@ Then, install the platform services.
 kapp deploy -a platform-setup -f platform/platform-setup --yes
 ```
 
+## Sample 1: Git -> Image > Deploy
+
+For this first example, we'll use the `book-service` application.
+
+As a developer, you can submit the workload in two ways.
+
+A. Using the Kubernetes CLI:
+
+```shell
+kubectl apply -f applications/book-service/config
+```
+
+B. Using the Tanzu Apps CLI:
+
+```shell
+tanzu apps workload create book-service \
+  --git-branch main \
+  --git-repo https://github.com/ThomasVitale/goto-aarhus-2022-cartographer \
+  --label app.kubernetes.io/part-of=book-service \
+  --subpath applications/book-service \
+  --type web
+```
+
+Either way, you can follow the deployment process with the Tanzu Apps CLI.
+
+```shell
+tanzu apps workload tail book-service
+```
+
+If you have [kubectl tree](https://github.com/ahmetb/kubectl-tree) installed, you can also visualize
+all the resources created as part of the supply chain.
+
+```shell
+kubectl tree workload book-service
+```
+
+## Sample 2: Git -> Test -> Image -> Deploy
+
+For this first example, we'll use the `music-service` application.
+
+As a developer, you can submit the workload in two ways.
+
+A. Using the Kubernetes CLI:
+
+```shell
+kubectl apply -f applications/music-service/config
+```
+
+B. Using the Tanzu Apps CLI:
+
+```shell
+tanzu apps workload create music-service \
+  --git-branch main \
+  --git-repo https://github.com/ThomasVitale/goto-aarhus-2022-cartographer \
+  --label apps.tanzu.vmware.com/has-tests=true \
+  --label app.kubernetes.io/part-of=music-service \
+  --subpath applications/music-service \
+  --type web
+```
+
+Either way, you can follow the deployment process with the Tanzu Apps CLI.
+
+```shell
+tanzu apps workload tail music-service
+```
+
+You can also visualize all the resources created as part of the supply chain.
+
+```shell
+kubectl tree workload book-service
+```
+
+## Sample 3: Git -> Test -> Image -> Scan -> Deploy
+
 ## Tips
 
 On DigitalOcean, you can create a cluster from `doctl`.

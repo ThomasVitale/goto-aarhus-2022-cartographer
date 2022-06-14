@@ -1,0 +1,53 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterSupplyChain
+metadata:
+  name: testing-supply-chain
+spec:
+  selector:
+    apps.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/has-tests: "true"
+  params:
+    - default:
+        repository: thomasvitale/goto
+        server: ghcr.io
+      name: registry
+    - default: default
+      name: cluster_builder
+    - default: default
+      name: service_account
+    - default: go-git
+      name: git_implementation
+    - default: ""
+      name: git_secret
+
+  resources:
+    - name: source-provider
+      templateRef:
+        kind: ClusterSourceTemplate
+        name: git-repository
+
+    - name: source-tester
+      templateRef:
+        kind: ClusterSourceTemplate
+        name: test
+      sources:
+        - resource: source-provider
+          name: source
+    
+    - name: image-builder
+      templateRef:
+        kind: ClusterImageTemplate
+        name: image
+      sources:
+      - name: source
+        resource: source-tester
+
+    - name: deployer
+      templateRef:
+        kind: ClusterTemplate
+        name: app
+      images:
+        - name: image
+          resource: image-builder

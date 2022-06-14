@@ -4,19 +4,25 @@ kind: Workload
 metadata:
   name: music-service
   labels:
-    app.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/has-tests: "true"
     app.kubernetes.io/part-of: music-service
 spec:
+  serviceAccountName: testing-sc-sa
   source:
     git:
       url: https://github.com/ThomasVitale/goto-aarhus-2022-cartographer
       ref:
         branch: main
-      subPath: applications/music-service
+    subPath: applications/music-service
+  build:
+    env: 
+      - name: BP_JVM_VERSION 
+        value: "17.*"
   resources:
     limits:
-      cpu: 0.1
+      cpu: "2"
       memory: 756Mi
     requests:
-      cpu: 2
+      cpu: "0.1"
       memory: 756Mi
