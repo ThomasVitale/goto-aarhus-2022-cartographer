@@ -1,0 +1,49 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: app-toolkit
+  namespace: tanzu-package-repo-global
+  annotations:
+    kapp.k14s.io/change-rule.service-account: delete before deleting platform-sa
+spec:
+  serviceAccountName: platform-sa
+  packageRef:
+    refName: app-toolkit.community.tanzu.vmware.com
+    versionSelection:
+      constraints: 0.2.0
+      prereleases: {}
+  values:
+  - secretRef:
+      name: app-toolkit-values
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-toolkit-values
+  namespace: tanzu-package-repo-global
+stringData:
+  values.yml: |
+    ---
+    contour:
+      envoy:
+        service:
+          type: LoadBalancer
+        hostPorts:
+          enable: true
+
+    knative_serving:
+      domain:
+        type: real
+        name: thomasvitale.dev
+
+    kpack:
+      kp_default_repository: ghcr.io/thomasvitale/goto/app-toolkit-install
+      kp_default_repository_username: thomasvitale
+      kp_default_repository_password: REGISTRY_TOKEN
+
+    cartographer_catalog:
+      registry:
+        server: ghcr.io
+        repository: thomasvitale/goto

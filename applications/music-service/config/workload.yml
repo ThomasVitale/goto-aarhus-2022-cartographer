@@ -1,0 +1,22 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: music-service
+  labels:
+    app.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: music-service
+spec:
+  source:
+    git:
+      url: https://github.com/ThomasVitale/goto-aarhus-2022-cartographer
+      ref:
+        branch: main
+      subPath: applications/music-service
+  resources:
+    limits:
+      cpu: 0.1
+      memory: 756Mi
+    requests:
+      cpu: 2
+      memory: 756Mi

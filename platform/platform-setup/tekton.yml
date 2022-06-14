@@ -1,0 +1,15 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: tekton
+  namespace: tanzu-package-repo-global
+  annotations:
+    kapp.k14s.io/change-rule.service-account: delete before deleting platform-sa
+spec:
+  serviceAccountName: platform-sa
+  packageRef:
+    refName: tekton.neptunus.thomasvitale.com
+    versionSelection:
+      constraints: 0.36.0
+      prereleases: {}

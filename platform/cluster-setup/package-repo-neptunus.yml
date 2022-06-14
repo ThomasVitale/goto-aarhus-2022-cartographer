@@ -1,0 +1,13 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: neptunus-repo
+  namespace: tanzu-package-repo-global
+  annotations:
+    kapp.k14s.io/change-group: package-repo
+spec:
+  syncPeriod: 1m
+  fetch:
+    imgpkgBundle:
+      image: ghcr.io/neptunus-platform/package-repository:0.3.0
