@@ -5,6 +5,7 @@ metadata:
   name: tekton
   namespace: tanzu-package-repo-global
   annotations:
+    kapp.k14s.io/change-group: tekton
     kapp.k14s.io/change-rule.service-account: delete before deleting platform-sa
 spec:
   serviceAccountName: platform-sa

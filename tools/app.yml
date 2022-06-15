@@ -1,0 +1,25 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+
+metadata:
+  name: kapp-book-service
+  namespace: default
+
+spec:
+  serviceAccountName: default
+  syncPeriod: 30s
+  fetch:
+    - git:
+        url: https://github.com/ThomasVitale/goto-aarhus-2022-cartographer
+        ref: origin/main
+        subPath: applications/book-service/config
+  template:
+    - ytt:
+        inline:
+          paths:
+            values.yml: |
+              #@data/values
+              ---
+              namespace: default
+  deploy:
+    - kapp: {}

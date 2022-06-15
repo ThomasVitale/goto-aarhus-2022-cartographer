@@ -1,0 +1,14 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: flux-book-service
+  labels:
+    app.kubernetes.io/part-of: kpack-book-service
+spec:
+  interval: 1m0s
+  url: https://github.com/ThomasVitale/goto-aarhus-2022-cartographer
+  ref:
+    branch: main
+  gitImplementation: go-git
+  ignore: '!.git'

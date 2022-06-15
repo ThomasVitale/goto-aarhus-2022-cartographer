@@ -5,6 +5,7 @@ metadata:
   name: app-toolkit
   namespace: tanzu-package-repo-global
   annotations:
+    kapp.k14s.io/change-group: app-toolkit
     kapp.k14s.io/change-rule.service-account: delete before deleting platform-sa
 spec:
   serviceAccountName: platform-sa
@@ -42,8 +43,6 @@ stringData:
       kp_default_repository: ghcr.io/thomasvitale/goto/app-toolkit-install
       kp_default_repository_username: thomasvitale
       kp_default_repository_password: REGISTRY_TOKEN
-
-    cartographer_catalog:
-      registry:
-        server: ghcr.io
-        repository: thomasvitale/goto
+    
+    excluded_packages:
+      - cartographer-catalog.community.tanzu.vmware.com

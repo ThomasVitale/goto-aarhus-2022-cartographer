@@ -20,9 +20,25 @@ data:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: workload-user-sa
+  name: default
   namespace: staging
+  annotations:
+    kapp.k14s.io/create-strategy: fallback-on-update
 secrets:
 - name: registry-credentials
 imagePullSecrets:
 - name: registry-credentials
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: supply-chain-workload
+  namespace: staging
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: supply-chain-workload
+subjects:
+  - kind: ServiceAccount
+    name: default

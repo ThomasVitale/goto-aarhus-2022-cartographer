@@ -1,0 +1,22 @@
+---
+apiVersion: kpack.io/v1alpha2
+kind: Image
+metadata:
+  name: kpack-book-service
+  labels:
+    app.kubernetes.io/part-of: kpack-book-service
+spec:
+  tag: ghcr.io/thomasvitale/goto/kpack-book-service
+  serviceAccountName: default
+  builder:
+    kind: ClusterBuilder
+    name: default
+  source:
+    git:
+      url: https://github.com/ThomasVitale/goto-aarhus-2022-cartographer
+      revision: main
+    subPath: applications/book-service
+  build:
+    env: 
+      - name: BP_JVM_VERSION 
+        value: "17.*"

@@ -90,7 +90,7 @@ tanzu apps workload create book-service \
   --git-branch main \
   --git-repo https://github.com/ThomasVitale/goto-aarhus-2022-cartographer \
   --label app.kubernetes.io/part-of=book-service \
-  --subpath applications/book-service \
+  --sub-path applications/book-service \
   --type web
 ```
 
@@ -127,7 +127,7 @@ tanzu apps workload create music-service \
   --git-repo https://github.com/ThomasVitale/goto-aarhus-2022-cartographer \
   --label apps.tanzu.vmware.com/has-tests=true \
   --label app.kubernetes.io/part-of=music-service \
-  --subpath applications/music-service \
+  --sub-path applications/music-service \
   --type web
 ```
 
@@ -142,8 +142,6 @@ You can also visualize all the resources created as part of the supply chain.
 ```shell
 kubectl tree workload book-service
 ```
-
-## Sample 3: Git -> Test -> Image -> Scan -> Deploy
 
 ## Tips
 

@@ -1,0 +1,22 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: knative-book-service
+  labels:
+    app.kubernetes.io/part-of: knative-book-service
+spec:
+  template:
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: knative-book-service
+          image: ghcr.io/thomasvitale/goto/kpack-book-service:b1.20220615.180414
+          securityContext:
+            runAsUser: 1000
+          resources:
+            limits:
+              cpu: "2"
+              memory: 756Mi
+            requests:
+              cpu: "0.1"
+              memory: 756Mi

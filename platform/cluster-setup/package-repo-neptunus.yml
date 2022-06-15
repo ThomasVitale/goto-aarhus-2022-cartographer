@@ -10,4 +10,4 @@ spec:
   syncPeriod: 1m
   fetch:
     imgpkgBundle:
-      image: ghcr.io/neptunus-platform/package-repository:0.3.0
+      image: ghcr.io/neptunus-platform/package-repository:0.4.0
